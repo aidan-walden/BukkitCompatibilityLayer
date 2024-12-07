@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "bukkitcompatibilitylayer",
+  "version": "${version}",
+  "name": "BukkitCompatibilityLayer",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/CodexScript/BukkitCompatibilityLayer"
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/bukkitcompatibilitylayer/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "github.codexscript.bukkitcompatibilitylayer.BukkitCompatibilityLayer"
+    ],
+    "client": [
+      "github.codexscript.bukkitcompatibilitylayer.BukkitCompatibilityLayerClient"
+    ]
+  },
+  "mixins": [
+    "bukkitcompatibilitylayer.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

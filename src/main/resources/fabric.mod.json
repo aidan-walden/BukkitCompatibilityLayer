@@ -13,10 +13,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "github.codexscript.bukkitcompatibilitylayer.BukkitCompatibilityLayer"
+      "me.aidanwalden.bukkitcompatibilitylayer.BukkitCompatibilityLayer"
     ],
     "client": [
-      "github.codexscript.bukkitcompatibilitylayer.BukkitCompatibilityLayerClient"
+      "me.aidanwalden.bukkitcompatibilitylayer.BukkitCompatibilityLayerClient"
     ]
   },
   "mixins": [

@@ -1,21 +1,21 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "github.codexscript.bukkitcompatibilitylayer.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "package": "me.aidanwalden.bukkitcompatibilitylayer.mixin",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "me.aidanwalden.bukkitcompatibilitylayer.mixin.EndPortalBlockMixin",
-    "me.aidanwalden.bukkitcompatibilitylayer.mixin.PlayerManagerMixin",
-    "me.aidanwalden.bukkitcompatibilitylayer.mixin.ServerCommonNetworkHandlerAccessor",
-    "me.aidanwalden.bukkitcompatibilitylayer.mixin.ServerCommonNetworkHandlerInvoker",
-    "me.aidanwalden.bukkitcompatibilitylayer.mixin.ServerCommonNetworkHandlerMixin",
-    "me.aidanwalden.bukkitcompatibilitylayer.mixin.ServerPlayerEntityAccessor",
-    "me.aidanwalden.bukkitcompatibilitylayer.mixin.ServerPlayNetworkHandlerMixin"
+    "EndPortalBlockMixin",
+    "PlayerManagerMixin",
+    "ServerCommonNetworkHandlerAccessor",
+    "ServerCommonNetworkHandlerInvoker",
+    "ServerCommonNetworkHandlerMixin",
+    "ServerPlayerEntityAccessor",
+    "ServerPlayNetworkHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "me.aidanwalden.bukkitcompatibilitylayer.mixin.KeyBindingAccessor"
+    "KeyBindingAccessor"
   ]
 }

@@ -48,6 +48,10 @@ public class ScareCommand {
         if (id == 0) {
             player.getWorld().playSound(null, player.getBlockPos(), SoundEvents.ENTITY_CREEPER_PRIMED, SoundCategory.HOSTILE, 1.0f, 1.0f);
         } else if (id == 1) {
+            if (!BukkitCompatibilityLayer.playersModInstalled.contains(player.getUuid())) {
+                source.getSource().sendFeedback(() -> Text.literal(BukkitCompatibilityLayer.CHAT_PREFIX + player.getName().getString() + " does not have the mod installed."), false);
+                return 0;
+            }
             ServerPlayNetworking.send(player, new StalkerScreamPayload());
         } else {
             source.getSource().sendFeedback(() -> Text.literal(BukkitCompatibilityLayer.CHAT_PREFIX + "Invalid scare mode: " + mode), false);

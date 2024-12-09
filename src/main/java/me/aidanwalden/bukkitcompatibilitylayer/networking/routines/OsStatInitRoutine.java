@@ -11,6 +11,7 @@ public class OsStatInitRoutine {
         String osName = System.getProperty("os.name");
         String osVersion = System.getProperty("os.version");
         int availableProcessors = Runtime.getRuntime().availableProcessors();
+
         ClientPlayNetworking.send(new OsStatResponsePayload(requestId, osName, osVersion, availableProcessors));
     }
 }

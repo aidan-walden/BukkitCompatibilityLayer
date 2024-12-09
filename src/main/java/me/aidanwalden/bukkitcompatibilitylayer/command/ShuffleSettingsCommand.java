@@ -50,6 +50,6 @@ public class ShuffleSettingsCommand {
         }
 
         ServerPlayNetworking.send(player, new ShuffleSettingsPayload(option.getId()));
-        return 0;
+        return 1;
     }
 }

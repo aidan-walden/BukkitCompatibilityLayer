@@ -5,6 +5,7 @@ import me.aidanwalden.bukkitcompatibilitylayer.command.*;
 import me.aidanwalden.bukkitcompatibilitylayer.events.PlayerLeaveListener;
 import me.aidanwalden.bukkitcompatibilitylayer.events.UseBlockListener;
 import me.aidanwalden.bukkitcompatibilitylayer.networking.NetworkingMessages;
+import me.aidanwalden.bukkitcompatibilitylayer.sound.ModSounds;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -41,6 +42,8 @@ public class BukkitCompatibilityLayer implements ModInitializer {
     public void onInitialize() {
         // hasLuckPerms = FabricLoader.getInstance().isModLoaded("luckperms");
         UseBlockCallback.EVENT.register(UseBlockListener::onUseBlock);
+
+        ModSounds.registerSounds();
 
         NetworkingMessages.registerServersidePackets();
         ServerPlayConnectionEvents.DISCONNECT.register(PlayerLeaveListener::onPlayerLeave);

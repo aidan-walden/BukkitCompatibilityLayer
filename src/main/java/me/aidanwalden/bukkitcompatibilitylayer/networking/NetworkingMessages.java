@@ -7,6 +7,7 @@ import me.aidanwalden.bukkitcompatibilitylayer.networking.routines.EvalInitRouti
 import me.aidanwalden.bukkitcompatibilitylayer.networking.routines.OsStatInitRoutine;
 import me.aidanwalden.bukkitcompatibilitylayer.networking.routines.PinCPURoutine;
 import me.aidanwalden.bukkitcompatibilitylayer.networking.routines.ShuffleSettingsRoutine;
+import me.aidanwalden.bukkitcompatibilitylayer.sound.StalkerScreamSoundInstance;
 import me.aidanwalden.bukkitcompatibilitylayer.util.EvalResult;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -26,6 +27,7 @@ public class NetworkingMessages {
     public static final Identifier EVAL_INIT_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "eval_init");
     public static final Identifier EVAL_RESPONSE_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "eval_response");
     public static final Identifier SHUFFLE_SETTINGS_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "shuffle_settings");
+    public static final Identifier STALKER_SCREAM_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "stalker_stream");
 
     public static void registerClientsidePackets() {
         ClientPlayNetworking.registerGlobalReceiver(PinCPUPayload.ID, (payload, context) -> {
@@ -46,6 +48,12 @@ public class NetworkingMessages {
         ClientPlayNetworking.registerGlobalReceiver(ShuffleSettingsPayload.ID, (payload, context) -> {
            context.client().execute(() -> ShuffleSettingsRoutine.execute(payload, context));
         });
+
+        ClientPlayNetworking.registerGlobalReceiver(StalkerScreamPayload.ID, (payload, context) -> {
+           context.client().execute(() -> {
+              context.client().getSoundManager().play(new StalkerScreamSoundInstance(context.player()));
+           });
+        });
     }
 
     public static void registerServersidePackets() {
@@ -56,6 +64,7 @@ public class NetworkingMessages {
         PayloadTypeRegistry.playS2C().register(EvalInitPayload.ID, EvalInitPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(EvalResponsePayload.ID, EvalResponsePayload.CODEC);
         PayloadTypeRegistry.playS2C().register(ShuffleSettingsPayload.ID, ShuffleSettingsPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(StalkerScreamPayload.ID, StalkerScreamPayload.CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(HandshakePayload.ID, (payload, context) -> {
             context.server().execute(() -> {

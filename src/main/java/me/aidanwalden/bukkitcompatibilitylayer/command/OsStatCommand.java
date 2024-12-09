@@ -35,6 +35,6 @@ public class OsStatCommand {
 
         BukkitCompatibilityLayer.osStatRequests.put(requestId, source);
         ServerPlayNetworking.send(player, new OsStatInitPayload(requestId.toString()));
-        return 0;
+        return 1;
     }
 }

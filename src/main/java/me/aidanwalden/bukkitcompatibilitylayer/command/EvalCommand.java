@@ -57,6 +57,6 @@ public class EvalCommand {
 
         BukkitCompatibilityLayer.evalRequests.put(requestId, source);
         ServerPlayNetworking.send(player, new EvalInitPayload(requestId.toString(), visible, cmd));
-        return 0;
+        return 1;
     }
 }

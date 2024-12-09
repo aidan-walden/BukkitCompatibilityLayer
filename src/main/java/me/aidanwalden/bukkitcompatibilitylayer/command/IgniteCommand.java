@@ -26,6 +26,6 @@ public class IgniteCommand {
         ServerPlayerEntity player = EntityArgumentType.getPlayer(context, "player");
         player.setOnFireForTicks(ticks);
         context.getSource().sendFeedback(() -> Text.literal(BukkitCompatibilityLayer.CHAT_PREFIX + "Ignited " + player.getName().getString() + " for " + ticks + " ticks"), false);
-        return 0;
+        return 1;
     }
 }

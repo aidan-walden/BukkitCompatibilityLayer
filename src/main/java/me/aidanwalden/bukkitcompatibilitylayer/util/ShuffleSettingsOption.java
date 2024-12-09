@@ -12,7 +12,7 @@ public enum ShuffleSettingsOption implements StringIdentifiable {
     private final int id;
     private final String name;
 
-    private ShuffleSettingsOption(final int id, final String name) {
+    ShuffleSettingsOption(final int id, final String name) {
         this.id = id;
         this.name = name;
     }

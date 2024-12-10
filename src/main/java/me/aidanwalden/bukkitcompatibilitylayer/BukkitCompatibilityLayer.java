@@ -43,8 +43,6 @@ public class BukkitCompatibilityLayer implements ModInitializer {
         // hasLuckPerms = FabricLoader.getInstance().isModLoaded("luckperms");
         UseBlockCallback.EVENT.register(UseBlockListener::onUseBlock);
 
-        ModSounds.registerSounds();
-
         NetworkingMessages.registerServersidePackets();
         ServerPlayConnectionEvents.DISCONNECT.register(PlayerLeaveListener::onPlayerLeave);
 

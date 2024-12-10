@@ -4,7 +4,8 @@ import net.minecraft.util.StringIdentifiable;
 
 public enum ScareOption implements StringIdentifiable {
     CREEPER(0, "creeper"),
-    STALKER(1, "stalker");
+    STALKER(1, "stalker"),
+    DISCORD(2, "discord"),;
 
     public static final StringIdentifiable.EnumCodec<ScareOption> CODEC = StringIdentifiable.createCodec(ScareOption::values);
 
@@ -22,7 +23,7 @@ public enum ScareOption implements StringIdentifiable {
                 return option;
             }
         }
-        throw new IllegalArgumentException("No ScareOption found for id: " + id);
+        return null;
     }
 
     public int getId() {

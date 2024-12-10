@@ -3,5 +3,10 @@
     "sounds": [
       "bukkitcompatibilitylayer:stalker_scream"
     ]
+  },
+  "discord_ping": {
+    "sounds": [
+      "bukkitcompatibilitylayer:discord_ping"
+    ]
   }
 }

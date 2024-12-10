@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ScareSuggestion implements SuggestionProvider<ServerCommandSource> {
-    private static final List<String> suggestions = List.of("creeper", "stalker");
+    private static final List<String> suggestions = List.of("creeper", "stalker", "discord");
 
     @Override
     public CompletableFuture<Suggestions> getSuggestions(CommandContext<ServerCommandSource> context, SuggestionsBuilder builder) {

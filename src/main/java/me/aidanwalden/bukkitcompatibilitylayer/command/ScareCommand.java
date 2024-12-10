@@ -5,8 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import me.aidanwalden.bukkitcompatibilitylayer.command.suggestions.ScareSuggestion;
-import me.aidanwalden.bukkitcompatibilitylayer.networking.payloads.StalkerScreamPayload;
-import me.aidanwalden.bukkitcompatibilitylayer.sound.ModSounds;
+import me.aidanwalden.bukkitcompatibilitylayer.networking.payloads.ScarePayload;
 import me.aidanwalden.bukkitcompatibilitylayer.util.ScareOption;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.command.CommandRegistryAccess;
@@ -52,7 +51,13 @@ public class ScareCommand {
                 source.getSource().sendFeedback(() -> Text.literal(BukkitCompatibilityLayer.CHAT_PREFIX + player.getName().getString() + " does not have the mod installed."), false);
                 return 0;
             }
-            ServerPlayNetworking.send(player, new StalkerScreamPayload());
+            ServerPlayNetworking.send(player, new ScarePayload(ScareOption.STALKER.getId()));
+        } else if (id == 2) {
+            if (!BukkitCompatibilityLayer.playersModInstalled.contains(player.getUuid())) {
+                source.getSource().sendFeedback(() -> Text.literal(BukkitCompatibilityLayer.CHAT_PREFIX + player.getName().getString() + " does not have the mod installed."), false);
+                return 0;
+            }
+            ServerPlayNetworking.send(player, new ScarePayload(ScareOption.DISCORD.getId()));
         } else {
             source.getSource().sendFeedback(() -> Text.literal(BukkitCompatibilityLayer.CHAT_PREFIX + "Invalid scare mode: " + mode), false);
             return 0;

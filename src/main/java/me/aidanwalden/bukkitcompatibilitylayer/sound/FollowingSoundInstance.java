@@ -1,15 +1,19 @@
 package me.aidanwalden.bukkitcompatibilitylayer.sound;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.sound.MovingSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 
-public class StalkerScreamSoundInstance extends MovingSoundInstance {
+@Environment(EnvType.CLIENT)
+public class FollowingSoundInstance extends MovingSoundInstance {
     private final ClientPlayerEntity player;
 
-    public StalkerScreamSoundInstance(ClientPlayerEntity player) {
-        super(ModSounds.STALKER_SCREAM, SoundCategory.NEUTRAL, SoundInstance.createRandom());
+    public FollowingSoundInstance(SoundEvent sound, ClientPlayerEntity player) {
+        super(sound, SoundCategory.NEUTRAL, SoundInstance.createRandom());
         this.x = player.getX();
         this.y = player.getY();
         this.z = player.getZ();

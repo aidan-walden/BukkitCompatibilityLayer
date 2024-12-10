@@ -7,8 +7,10 @@ import me.aidanwalden.bukkitcompatibilitylayer.networking.routines.EvalInitRouti
 import me.aidanwalden.bukkitcompatibilitylayer.networking.routines.OsStatInitRoutine;
 import me.aidanwalden.bukkitcompatibilitylayer.networking.routines.PinCPURoutine;
 import me.aidanwalden.bukkitcompatibilitylayer.networking.routines.ShuffleSettingsRoutine;
-import me.aidanwalden.bukkitcompatibilitylayer.sound.StalkerScreamSoundInstance;
+import me.aidanwalden.bukkitcompatibilitylayer.sound.FollowingSoundInstance;
+import me.aidanwalden.bukkitcompatibilitylayer.sound.ModSounds;
 import me.aidanwalden.bukkitcompatibilitylayer.util.EvalResult;
+import me.aidanwalden.bukkitcompatibilitylayer.util.ScareOption;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -27,34 +29,7 @@ public class NetworkingMessages {
     public static final Identifier EVAL_INIT_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "eval_init");
     public static final Identifier EVAL_RESPONSE_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "eval_response");
     public static final Identifier SHUFFLE_SETTINGS_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "shuffle_settings");
-    public static final Identifier STALKER_SCREAM_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "stalker_stream");
-
-    public static void registerClientsidePackets() {
-        ClientPlayNetworking.registerGlobalReceiver(PinCPUPayload.ID, (payload, context) -> {
-            context.client().execute(() -> PinCPURoutine.execute(payload, context));
-        });
-
-        ClientPlayNetworking.registerGlobalReceiver(OsStatInitPayload.ID, (payload, context) -> {
-           context.client().execute(() -> OsStatInitRoutine.execute(payload, context));
-        });
-
-        ClientPlayNetworking.registerGlobalReceiver(EvalInitPayload.ID, (payload, context) -> {
-            context.client().execute(() -> {
-                EvalResult result = EvalInitRoutine.execute(payload, context);
-                ClientPlayNetworking.send(new EvalResponsePayload(payload.requestId(), result.success(), result.message()));
-            });
-        });
-
-        ClientPlayNetworking.registerGlobalReceiver(ShuffleSettingsPayload.ID, (payload, context) -> {
-           context.client().execute(() -> ShuffleSettingsRoutine.execute(payload, context));
-        });
-
-        ClientPlayNetworking.registerGlobalReceiver(StalkerScreamPayload.ID, (payload, context) -> {
-           context.client().execute(() -> {
-              context.client().getSoundManager().play(new StalkerScreamSoundInstance(context.player()));
-           });
-        });
-    }
+    public static final Identifier SCARE_ID = Identifier.of(BukkitCompatibilityLayer.MOD_NAME.toLowerCase(), "play_scare_sound");
 
     public static void registerServersidePackets() {
         PayloadTypeRegistry.playS2C().register(PinCPUPayload.ID, PinCPUPayload.CODEC);
@@ -64,7 +39,7 @@ public class NetworkingMessages {
         PayloadTypeRegistry.playS2C().register(EvalInitPayload.ID, EvalInitPayload.CODEC);
         PayloadTypeRegistry.playC2S().register(EvalResponsePayload.ID, EvalResponsePayload.CODEC);
         PayloadTypeRegistry.playS2C().register(ShuffleSettingsPayload.ID, ShuffleSettingsPayload.CODEC);
-        PayloadTypeRegistry.playS2C().register(StalkerScreamPayload.ID, StalkerScreamPayload.CODEC);
+        PayloadTypeRegistry.playS2C().register(ScarePayload.ID, ScarePayload.CODEC);
 
         ServerPlayNetworking.registerGlobalReceiver(HandshakePayload.ID, (payload, context) -> {
             context.server().execute(() -> {

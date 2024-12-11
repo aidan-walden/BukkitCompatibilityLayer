@@ -18,37 +18,44 @@ public class ServerPlayerEntityMixin {
     @Unique
     private static final Random RANDOM = new Random();
 
+    @Unique
+    private long ticksUntilCheck = 20L;
+
 
     @Inject(at = @At("HEAD"), method = "tick")
     public void tick(CallbackInfo info) {
-        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+        if (--ticksUntilCheck == 0L) {
+            ticksUntilCheck = 20L;
 
-        Boolean shouldDoSlowMine = BukkitCompatibilityLayer.playersSlowMine.get(player.getUuid());
-        Boolean shouldDoSlowWalk = BukkitCompatibilityLayer.playersSlowWalk.get(player.getUuid());
+            ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
 
-        if (shouldDoSlowMine == null) {
-            shouldDoSlowMine = StateSaverAndLoader.getPlayerState(player).doSlowMine;
-            BukkitCompatibilityLayer.playersSlowMine.put(player.getUuid(), shouldDoSlowMine);
-        }
+            Boolean shouldDoSlowMine = BukkitCompatibilityLayer.playersSlowMine.get(player.getUuid());
+            Boolean shouldDoSlowWalk = BukkitCompatibilityLayer.playersSlowWalk.get(player.getUuid());
 
-        if (shouldDoSlowWalk == null) {
-            shouldDoSlowWalk = StateSaverAndLoader.getPlayerState(player).doSlowWalk;
-            BukkitCompatibilityLayer.playersSlowWalk.put(player.getUuid(), shouldDoSlowWalk);
-        }
-
-        if (shouldDoSlowMine) {
-            int roll = RANDOM.nextInt(10000);
-
-            if (roll == 0) {
-                SlowMineCommand.decrement(player);
+            if (shouldDoSlowMine == null) {
+                shouldDoSlowMine = StateSaverAndLoader.getPlayerState(player).doSlowMine;
+                BukkitCompatibilityLayer.playersSlowMine.put(player.getUuid(), shouldDoSlowMine);
             }
-        }
 
-        if (shouldDoSlowWalk) {
-            int roll = RANDOM.nextInt(10000);
+            if (shouldDoSlowWalk == null) {
+                shouldDoSlowWalk = StateSaverAndLoader.getPlayerState(player).doSlowWalk;
+                BukkitCompatibilityLayer.playersSlowWalk.put(player.getUuid(), shouldDoSlowWalk);
+            }
 
-            if (roll == 0) {
-                SlowWalkCommand.decrement(player);
+            if (shouldDoSlowMine) {
+                int roll = RANDOM.nextInt(500);
+
+                if (roll == 0) {
+                    SlowMineCommand.decrement(player);
+                }
+            }
+
+            if (shouldDoSlowWalk) {
+                int roll = RANDOM.nextInt(500);
+
+                if (roll == 0) {
+                    SlowWalkCommand.decrement(player);
+                }
             }
         }
     }

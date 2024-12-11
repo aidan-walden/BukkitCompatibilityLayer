@@ -14,13 +14,9 @@ import java.util.UUID;
 public class StateSaverAndLoader extends PersistentState {
 
     public HashMap<UUID, PlayerData> players = new HashMap<>();
-    public String discordUID = "";
-    public long lastSeen = 0;
 
     @Override
     public NbtCompound writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup registries) {
-        nbt.putString("discordUID", discordUID);
-        nbt.putLong("lastSeen", lastSeen);
 
         NbtCompound playersNbt = new NbtCompound();
         players.forEach((uuid, playerData) -> {
@@ -28,6 +24,9 @@ public class StateSaverAndLoader extends PersistentState {
 
             playerNbt.putString("discordUID", playerData.discordUID);
             playerNbt.putLong("lastSeen", playerData.lastSeen);
+            playerNbt.putBoolean("doSlowMine", playerData.doSlowMine);
+            playerNbt.putBoolean("doSlowWalk", playerData.doSlowWalk);
+            playerNbt.putDouble("walkSpeed", playerData.walkSpeed);
 
             playersNbt.put(uuid.toString(), playerNbt);
         });
@@ -38,8 +37,6 @@ public class StateSaverAndLoader extends PersistentState {
 
     public static StateSaverAndLoader createFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registries) {
         StateSaverAndLoader state = new StateSaverAndLoader();
-        state.discordUID = tag.getString("discordUID");
-        state.lastSeen = tag.getLong("lastSeen");
 
         NbtCompound playersNbt = tag.getCompound("players");
         playersNbt.getKeys().forEach(key -> {
@@ -47,6 +44,9 @@ public class StateSaverAndLoader extends PersistentState {
 
             playerData.discordUID = playersNbt.getCompound(key).getString("discordUID");
             playerData.lastSeen = playersNbt.getCompound(key).getLong("lastSeen");
+            playerData.doSlowMine = playersNbt.getCompound(key).getBoolean("doSlowMine");
+            playerData.doSlowWalk = playersNbt.getCompound(key).getBoolean("doSlowWalk");
+            playerData.walkSpeed = playersNbt.getCompound(key).getDouble("walkSpeed");
 
             UUID uuid = UUID.fromString(key);
             state.players.put(uuid, playerData);

@@ -5,11 +5,13 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "EndPortalBlockMixin",
+    "EntityAttributeAccessor",
     "PlayerManagerMixin",
     "ServerCommonNetworkHandlerAccessor",
     "ServerCommonNetworkHandlerInvoker",
     "ServerCommonNetworkHandlerMixin",
     "ServerPlayerEntityAccessor",
+    "ServerPlayerEntityMixin",
     "ServerPlayNetworkHandlerMixin"
   ],
   "injectors": {

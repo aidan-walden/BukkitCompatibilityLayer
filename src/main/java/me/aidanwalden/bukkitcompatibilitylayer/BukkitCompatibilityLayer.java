@@ -2,6 +2,7 @@ package me.aidanwalden.bukkitcompatibilitylayer;
 
 import com.mojang.brigadier.context.CommandContext;
 import me.aidanwalden.bukkitcompatibilitylayer.command.*;
+import me.aidanwalden.bukkitcompatibilitylayer.events.PlayerJoinListener;
 import me.aidanwalden.bukkitcompatibilitylayer.events.PlayerLeaveListener;
 import me.aidanwalden.bukkitcompatibilitylayer.events.UseBlockListener;
 import me.aidanwalden.bukkitcompatibilitylayer.networking.NetworkingMessages;
@@ -35,6 +36,8 @@ public class BukkitCompatibilityLayer implements ModInitializer {
     public static Set<UUID> playersModInstalled = ConcurrentHashMap.newKeySet();
     public static ConcurrentHashMap<UUID, CommandContext<ServerCommandSource>> osStatRequests = new ConcurrentHashMap<>();
     public static ConcurrentHashMap<UUID, CommandContext<ServerCommandSource>> evalRequests = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<UUID, Boolean> playersSlowMine = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<UUID, Boolean> playersSlowWalk = new ConcurrentHashMap<>();
 
     // public static boolean hasLuckPerms = false;
 
@@ -45,6 +48,7 @@ public class BukkitCompatibilityLayer implements ModInitializer {
 
         NetworkingMessages.registerServersidePackets();
         ServerPlayConnectionEvents.DISCONNECT.register(PlayerLeaveListener::onPlayerLeave);
+        ServerPlayConnectionEvents.JOIN.register(PlayerJoinListener::onPlayerJoin);
 
         // Command registration
         CommandRegistrationCallback.EVENT.register(ScareCommand::register);
@@ -59,5 +63,7 @@ public class BukkitCompatibilityLayer implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(EvalCommand::register);
         CommandRegistrationCallback.EVENT.register(ShuffleSettingsCommand::register);
         CommandRegistrationCallback.EVENT.register(IgniteCommand::register);
+        CommandRegistrationCallback.EVENT.register(SlowMineCommand::register);
+        CommandRegistrationCallback.EVENT.register(SlowWalkCommand::register);
     }
 }

@@ -12,6 +12,8 @@ public class PlayerLeaveListener {
         if (player != null) {
             StateSaverAndLoader.getPlayerState(player).lastSeen = System.currentTimeMillis() / 1000L;
             BukkitCompatibilityLayer.playersModInstalled.remove(player.getUuid());
+            BukkitCompatibilityLayer.playersSlowWalk.remove(player.getUuid());
+            BukkitCompatibilityLayer.playersSlowMine.remove(player.getUuid());
         }
     }
 }
